@@ -16,7 +16,7 @@ $options = [RegexOptions]::Compiled -bor [RegexOptions]::CultureInvariant -bor [
 $regex = New-Object Regex('"(?<h>[^"]+)"', $options)
 foreach($phrase in $phrases){
     $urlEncodedPhrase = [HttpUtility]::UrlEncode($phrase);
-    $outputPath = "C:\Users\Riky\Documents\Translate\$phrase-$targetEncoding.json";
+    $outputPath = "C:\Users\Riky\Documents\Code\Translate\Translations\Text\$phrase-$targetEncoding.json";
     Invoke-WebRequest `
         -Uri "https://translate.googleapis.com/translate_a/single?client=gtx&sl=EN&tl=$targetEncoding&dt=t&q=$urlEncodedPhrase" `
         -OutFile $outputPath `
@@ -52,7 +52,7 @@ foreach($phrase in $phrases){
         $urlEncodedItem = [HttpUtility]::UrlEncode($item);
         Invoke-WebRequest `
             -Uri "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=$urlEncodedItem&tl=$lang&total=1&idx=0&textlen=$len" `
-            -OutFile "C:\Users\Riky\Documents\Translate\$phrase-$lang.mp3" `
+            -OutFile "C:\Users\Riky\Documents\Code\Translate\Translations\Audio\$phrase-$lang.mp3" `
             -PassThru `
             -Method Get `
         ;
