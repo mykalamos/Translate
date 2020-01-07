@@ -8,12 +8,12 @@ using System.Web;
 
 namespace Translate.Translator
 {
-    public static class TranslatorCoordinator
+    public class TranslatorCoordinator
     {
         private static Regex jsonRegex = new Regex("\"(?<h>[^\"]+)\"", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private const string rootDirectory = @"C:\Users\Riky\Documents\Code\Translate\Translations";
+        private const string rootDirectory = @"C:\Users\Riky\Documents\Code\Translate\Translations"; // TODO make this relative
 
-        public static void Download(Conversation[] conversations, Language[] languages)
+        public void Download(Conversation[] conversations, Language[] languages)
         {
             foreach (var language in languages)
                 foreach (var conversation in conversations)

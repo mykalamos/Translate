@@ -10,7 +10,7 @@ namespace Translate.Translator.Test
         {
             var conversation = new ConversationLoader().Load("Numbers");
             var language = new Language() { Name = "French", Code = "fr" };
-            TranslatorCoordinator.Download(new[] { conversation }, new[] { language});
+            new TranslatorCoordinator().Download(new[] { conversation }, new[] { language});
         }
 
         [Test]
@@ -18,7 +18,7 @@ namespace Translate.Translator.Test
         {
             var conversation = new ConversationLoader().Load("Numbers");
             var language = new Language() { Name = "German", Code = "de" };
-            TranslatorCoordinator.Download(new[] { conversation }, new[] { language });
+            new TranslatorCoordinator().Download(new[] { conversation }, new[] { language });
         }
 
         [Test]
@@ -26,7 +26,7 @@ namespace Translate.Translator.Test
         {
             var conversation = new ConversationLoader().Load("Numbers");
             var language = new Language() { Name = "Bengali", Code = "bn" };
-            TranslatorCoordinator.Download(new[] { conversation }, new[] { language });
+            new TranslatorCoordinator().Download(new[] { conversation }, new[] { language });
         }
     }
 }
