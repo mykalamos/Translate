@@ -1,0 +1,21 @@
+Hallo, ich möchte heute eine Fahrkarte nach Paris kaufen.
+Für wieviele Leute?
+Nur für mich
+Möchten Sie ein Rückflugticket?
+ja bitte
+Rückkehr an welchem \u200b\u200bTag?
+Dienstag
+Okay. 
+Wie wäre es heute Nachmittag? 
+Es gibt einen Zug um 15:05 Uhr
+Ja, bitte buchen Sie mich dazu
+Das sind 75 Euro
+Akzeptieren Sie Kreditkarten?
+Nein, nur Bargeld
+Von welchem \u200b\u200bBahnsteig fährt der Zug ab?
+Bahnsteig 12
+Wo ist das?
+Biegen Sie links ab und folgen Sie den Schildern für die Plattformen für 100 Meter und dann rechts
+Hier sind deine Tickets. 
+Vielen Dank
+Du bist herzlich Willkommen

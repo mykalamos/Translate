@@ -5,10 +5,12 @@ namespace Translate.Translator.Test
     [TestFixture]
     public class TranslatorCoordinatorTestFixture
     {
+        //const string conversationName = "Numbers";
+        const string conversationName = "Buying a train ticket";
         [Test]
         public void French()
         {
-            var conversation = new ConversationLoader().Load("Numbers");
+            var conversation = new ConversationLoader().Load(conversationName);
             var language = new Language() { Name = "French", Code = "fr" };
             new TranslatorCoordinator().Download(new[] { conversation }, new[] { language});
         }
@@ -16,7 +18,7 @@ namespace Translate.Translator.Test
         [Test]
         public void German()
         {
-            var conversation = new ConversationLoader().Load("Numbers");
+            var conversation = new ConversationLoader().Load(conversationName);
             var language = new Language() { Name = "German", Code = "de" };
             new TranslatorCoordinator().Download(new[] { conversation }, new[] { language });
         }
@@ -24,7 +26,7 @@ namespace Translate.Translator.Test
         [Test]
         public void Bengali()
         {
-            var conversation = new ConversationLoader().Load("Numbers");
+            var conversation = new ConversationLoader().Load(conversationName);
             var language = new Language() { Name = "Bengali", Code = "bn" };
             new TranslatorCoordinator().Download(new[] { conversation }, new[] { language });
         }

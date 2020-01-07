@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
@@ -20,6 +21,7 @@ namespace Translate.Translator
                 {
                     int phraseCounter = 1;
                     var m3uBuilder = new List<FileInfo>();
+                    var translatedConversationTextBuilder = new StringBuilder();
                     foreach (var phrase in conversation.Phrases)
                     {
                         var paddedPhraseCounter = phraseCounter.ToString().PadLeft(3, '0');
@@ -31,6 +33,8 @@ namespace Translate.Translator
                         foreach (var translatedPhrase in translatedPhrases)
                         {
                             var lang = (c == 0) ? "en" : language.Code;
+                            if (c == 1)
+                                translatedConversationTextBuilder.AppendLine(translatedPhrase);
                             var urlEncodedTranslatedPhrase = HttpUtility.UrlEncode(translatedPhrase);
 
                             var mp3Info = GetAudio(language, conversation, paddedPhraseCounter, lang, urlEncodedTranslatedPhrase);
@@ -39,14 +43,31 @@ namespace Translate.Translator
                         }
                         phraseCounter++;
                     }
-                    var m3uFileInfo = new FileInfo(
-                        @$"{rootDirectory}\{conversation.Name}\{language.Code}\{conversation.Name}_{language.Code}.m3u");
-                    if (!m3uFileInfo.Exists)
-                    {
-                        m3uFileInfo.Directory.Create();
-                        File.WriteAllLines(m3uFileInfo.FullName, m3uBuilder.Select(x => x.FullName).ToArray());
-                    }
+                    WriteM3u(language, conversation, m3uBuilder);
+                    WriteTranslatedText(language, conversation, translatedConversationTextBuilder);
                 }
+        }
+
+        private static void WriteM3u(Language language, Conversation conversation, List<FileInfo> m3uBuilder)
+        {
+            var m3uFileInfo = new FileInfo(
+                @$"{rootDirectory}\{conversation.Name}\{language.Code}\{conversation.Name}_{language.Code}.m3u");
+            if (!m3uFileInfo.Exists)
+            {
+                m3uFileInfo.Directory.Create();
+                File.WriteAllLines(m3uFileInfo.FullName, m3uBuilder.Select(x => x.FullName).ToArray());
+            }
+        }
+
+        private static void WriteTranslatedText(Language language, Conversation conversation, StringBuilder stringBuilder)
+        {
+            var translatedTFileInfo = new FileInfo(
+                @$"{rootDirectory}\{conversation.Name}\{language.Code}\{conversation.Name}_{language.Code}.txt");
+            if (!translatedTFileInfo.Exists)
+            {
+                translatedTFileInfo.Directory.Create();
+                File.WriteAllText(translatedTFileInfo.FullName, stringBuilder.ToString());
+            }
         }
 
         private static FileInfo GetAudio(Language language, Conversation conversation, string paddedPhraseCounter, string lang, string urlEncodedTranslatedPhrase)
