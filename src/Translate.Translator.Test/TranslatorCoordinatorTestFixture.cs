@@ -6,7 +6,8 @@ namespace Translate.Translator.Test
     public class TranslatorCoordinatorTestFixture
     {
         //const string conversationName = "Numbers";
-        const string conversationName = "Buying a train ticket";
+        //const string conversationName = "Buying a train ticket";
+        const string conversationName = "Days of the week";
         [Test]
         public void French()
         {
