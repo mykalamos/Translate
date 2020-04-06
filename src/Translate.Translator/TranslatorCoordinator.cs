@@ -51,7 +51,7 @@ namespace Translate.Translator
         private static void WriteM3u(Language language, Conversation conversation, List<FileInfo> m3uBuilder)
         {
             var m3uFileInfo = new FileInfo(
-                @$"{rootDirectory}\{conversation.Name}\{language.Code}\{conversation.Name}_{language.Code}.m3u");
+               PathUtils.RemoveEmptyDirectory(@$"{rootDirectory}\{conversation.Group}\{conversation.Name}\{language.Code}\{conversation.Name}_{language.Code}.m3u"));
             if (!m3uFileInfo.Exists)
             {
                 m3uFileInfo.Directory.Create();
@@ -62,7 +62,7 @@ namespace Translate.Translator
         private static void WriteTranslatedText(Language language, Conversation conversation, StringBuilder stringBuilder)
         {
             var translatedTFileInfo = new FileInfo(
-                @$"{rootDirectory}\{conversation.Name}\{language.Code}\{conversation.Name}_{language.Code}.txt");
+                PathUtils.RemoveEmptyDirectory(@$"{rootDirectory}\{conversation.Group}\{conversation.Name}\{language.Code}\{conversation.Name}_{language.Code}.txt"));
             if (!translatedTFileInfo.Exists)
             {
                 translatedTFileInfo.Directory.Create();
@@ -73,7 +73,7 @@ namespace Translate.Translator
         private static FileInfo GetAudio(Language language, Conversation conversation, string paddedPhraseCounter, string lang, string urlEncodedTranslatedPhrase)
         {
             var mp3FileInfo = new FileInfo(
-                @$"{rootDirectory}\{conversation.Name}\{language.Code}\{paddedPhraseCounter}_{lang}.mp3");
+               PathUtils.RemoveEmptyDirectory(@$"{rootDirectory}\{conversation.Group}\{conversation.Name}\{language.Code}\{paddedPhraseCounter}_{lang}.mp3"));
             if (!mp3FileInfo.Exists)
             {
                 var voiceUri = string.Format(Uris.VoiceApi, urlEncodedTranslatedPhrase, lang, lang.Length);
@@ -124,7 +124,7 @@ namespace Translate.Translator
             var encodedPhrase = HttpUtility.UrlEncode(phrase);
             var translateUri = string.Format(Uris.TranslateApi, language.Code, encodedPhrase);
             var jsonFileInfo = new FileInfo(
-                @$"{rootDirectory}\{conversation.Name}\{language.Code}\{paddedPhraseCounter}_{language.Code}.json");
+                PathUtils.RemoveEmptyDirectory(@$"{rootDirectory}\{conversation.Group}\{conversation.Name}\{language.Code}\{paddedPhraseCounter}_{language.Code}.json"));
             if (!jsonFileInfo.Exists)
             {
                 var request = WebRequest.Create(translateUri);
