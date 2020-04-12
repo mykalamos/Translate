@@ -5,7 +5,7 @@ namespace Translate.Translator.Test
     [TestFixture]
     public class TranslatorCoordinatorTestFixture
     {
-        const string conversationName = "002 La Douane"; 
+        const string conversationName = "Au bureau de placement"; 
         const string conversationGroup = "elearningFrench.com";
 
         [TestCase("Bengali", "bn", TestName = "Generate_Bengali")]
