@@ -5,17 +5,17 @@ namespace Translate.Translator.Test
     [TestFixture]
     public class TranslatorCoordinatorTestFixture
     {
-        const string conversationName = "FullStops";
-        const string conversationGroup = "TestHarness";
+        const string conversationName = "002 La Douane"; 
+        const string conversationGroup = "elearningFrench.com";
 
         [TestCase("Bengali", "bn", TestName = "Generate_Bengali")]
         [TestCase("German", "de",  TestName = "Generate_German")]
         [TestCase("French", "fr",  TestName = "Generate_French")]
-        public void TestImpl(string languageName, string isoCode)
+        public void TranslateAndAudio(string languageName, string isoCode)
         {
-            var conversation = new ConversationLoader().Load(conversationName, conversationGroup);
+            var conversation = ConversationLoader.Load(conversationName, conversationGroup);
             var language = new Language() { Name = languageName, Code = isoCode };
-            new TranslatorCoordinator().TranslateAndAudio(new[] { conversation }, new[] { language });
+            new TranslatorCoordinator().TranslateAndAudio(conversation , language );
         }
     }
 }
