@@ -11,7 +11,7 @@ namespace Translate.Translator
 {
     public class TranslatorCoordinator
     {
-        private static Regex jsonRegex = new Regex("\"(?<h>[^\"]+)\"", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
         private const string rootDirectory = @"C:\Users\Riky\Documents\Code\Translate\Translations"; // TODO make this relative
 
         public void Download(Conversation[] conversations, Language[] languages)
@@ -27,7 +27,7 @@ namespace Translate.Translator
                         var paddedPhraseCounter = phraseCounter.ToString().PadLeft(3, '0');
 
                         var translatedLines = GetTranslatedPhrase(language, conversation, phrase, paddedPhraseCounter);
-                        var translatedPhrases = MatchTranslatedPhrases(translatedLines);
+                        var translatedPhrases = TranslatedPhraseParser.MatchTranslatedPhrases(translatedLines);
 
                         int c = 0;
                         foreach (var translatedPhrase in translatedPhrases)
@@ -91,34 +91,10 @@ namespace Translate.Translator
                 Thread.Sleep(5000);
             }
             return mp3FileInfo;
+
         }
 
-        private static List<string> MatchTranslatedPhrases(string[] translatedLines)
-        {
-            var translatedPhrases = new List<string>();
-            var matches = jsonRegex.Matches(translatedLines[0]);
-            foreach (Match match in matches)
-            {
-                foreach (Group group in match.Groups)
-                {
-                    if (group.Name == "0")
-                    {
-                        continue;
-                    }
-                    foreach (Capture capture in group.Captures)
-                    {
-                        translatedPhrases.Add(capture.Value);
-                        if (translatedPhrases.Count == 2)
-                        {
-                            translatedPhrases.Reverse(); // make english first
-                            return translatedPhrases;
-                        }
-                    }
-                }
-            }
-            throw new System.Exception($"Not enough phrases found in {translatedLines[0]}");
-        }
-
+ 
         private static string[] GetTranslatedPhrase(Language language, Conversation conversation, string phrase, string paddedPhraseCounter)
         {
             var encodedPhrase = HttpUtility.UrlEncode(phrase);

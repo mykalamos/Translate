@@ -5,8 +5,8 @@ namespace Translate.Translator.Test
     [TestFixture]
     public class TranslatorCoordinatorTestFixture
     {
-        const string conversationName = "01 Formal Greetings and Farewells";
-        const string conversationGroup = "Dialogs for everyday use";
+        const string conversationName = "FullStops";
+        const string conversationGroup = "TestHarness";
 
         [TestCase("Bengali", "bn", TestName = "Generate_Bengali")]
         [TestCase("German", "de",  TestName = "Generate_German")]
