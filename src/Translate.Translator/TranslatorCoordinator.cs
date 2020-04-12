@@ -18,7 +18,7 @@ namespace Translate.Translator
                     foreach (var phrase in conversation.Phrases)
                     {
                         var paddedPhraseCounter = phraseCounter.ToString().PadLeft(3, '0');
-                        var translatedPhrase = GetTranslatedPhrase(language, conversation, phrase, paddedPhraseCounter);
+                        var translatedPhrase = TranslatedPhraseProvider.GetTranslatedPhrase(language, conversation, phrase, paddedPhraseCounter);
 
                         AudioProvider.GetAudio(language, conversation, m3uBuilder, translatedConversationTextBuilder, paddedPhraseCounter, translatedPhrase);
 
@@ -29,14 +29,5 @@ namespace Translate.Translator
                 }
             }
         }
-
-        private static TranslatedPhrase GetTranslatedPhrase(Language language, Conversation conversation, string phrase, string paddedPhraseCounter)
-        {
-            var translatedLines = TextTranslator.GetTranslatedPhrase(language, conversation, phrase, paddedPhraseCounter);
-            var translatedPhrase = TranslatedPhraseParser.ExtractTranslatedPhrases(translatedLines);
-            return translatedPhrase;
-        }
-
-        
     }
 }
