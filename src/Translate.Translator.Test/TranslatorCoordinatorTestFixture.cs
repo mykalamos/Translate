@@ -15,7 +15,7 @@ namespace Translate.Translator.Test
         {
             var conversation = new ConversationLoader().Load(conversationName, conversationGroup);
             var language = new Language() { Name = languageName, Code = isoCode };
-            new TranslatorCoordinator().Download(new[] { conversation }, new[] { language });
+            new TranslatorCoordinator().TranslateAndAudio(new[] { conversation }, new[] { language });
         }
     }
 }

@@ -9,11 +9,11 @@ namespace Translate.Translator
         private static Regex jsonRegex = new Regex("\"(?<TGroup>[^\"]+)\"", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static Regex stopParsingRegex = new Regex(@"[a-z0-9]{32}|\w+.md", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        public static List<string> MatchTranslatedPhrases(string[] translatedLines)
+        public static TranslatedPhrase ExtractTranslatedPhrases(string[] translatedLines)
         {
             var translatedPhrases = new List<string>();
 
-            var sbEnglish = new StringBuilder();
+            var sbSource = new StringBuilder();
             var sbTarget = new StringBuilder();
 
             foreach (var translatedLine in translatedLines)
@@ -56,10 +56,13 @@ namespace Translate.Translator
                 }
                 else
                 {
-                    sbEnglish.Append(line);
+                    sbSource.Append(line);
                 }
             }
-            return new List<string> { sbEnglish.ToString(), sbTarget.ToString() };
+            return new TranslatedPhrase {
+                Source = sbSource.ToString(), 
+                Target = sbTarget.ToString() 
+            };
             //throw new System.Exception($"Not enough phrases found in {translatedLines[0]}");
         }
     }
