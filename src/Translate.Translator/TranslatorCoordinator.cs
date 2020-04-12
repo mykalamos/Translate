@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Web;
 
 namespace Translate.Translator
 {
@@ -19,22 +18,9 @@ namespace Translate.Translator
                     foreach (var phrase in conversation.Phrases)
                     {
                         var paddedPhraseCounter = phraseCounter.ToString().PadLeft(3, '0');
+                        var translatedPhrase = GetTranslatedPhrase(language, conversation, phrase, paddedPhraseCounter);
 
-                        var translatedLines = TextTranslator.GetTranslatedPhrase(language, conversation, phrase, paddedPhraseCounter);
-                        var translatedPhrase = TranslatedPhraseParser.ExtractTranslatedPhrases(translatedLines);
-
-                        var sourceLanguageCode = "en";
-                        var targetLanguageCode = language.Code;
-                        
-                        translatedConversationTextBuilder.AppendLine(translatedPhrase.Target);
-                        var urlEncodedTranslatedSourcePhrase = HttpUtility.UrlEncode(translatedPhrase.Source);
-                        var urlEncodedTranslatedTargetPhrase = HttpUtility.UrlEncode(translatedPhrase.Target);
-
-                        var mp3InfoSource = AudioConverter.GetAudio(language, conversation, paddedPhraseCounter, sourceLanguageCode, urlEncodedTranslatedSourcePhrase);
-                        m3uBuilder.Add(mp3InfoSource);
-
-                        var mp3InfoTarget = AudioConverter.GetAudio(language, conversation, paddedPhraseCounter, targetLanguageCode, urlEncodedTranslatedTargetPhrase);
-                        m3uBuilder.Add(mp3InfoTarget);
+                        AudioProvider.GetAudio(language, conversation, m3uBuilder, translatedConversationTextBuilder, paddedPhraseCounter, translatedPhrase);
 
                         phraseCounter++;
                     }
@@ -43,5 +29,14 @@ namespace Translate.Translator
                 }
             }
         }
+
+        private static TranslatedPhrase GetTranslatedPhrase(Language language, Conversation conversation, string phrase, string paddedPhraseCounter)
+        {
+            var translatedLines = TextTranslator.GetTranslatedPhrase(language, conversation, phrase, paddedPhraseCounter);
+            var translatedPhrase = TranslatedPhraseParser.ExtractTranslatedPhrases(translatedLines);
+            return translatedPhrase;
+        }
+
+        
     }
 }
